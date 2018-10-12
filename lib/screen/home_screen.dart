@@ -38,7 +38,7 @@ class HomeScreenState extends State<HomeScreen> {
   Widget _buildBackground() {
     return Container(
       width: double.infinity,
-      height: MediaQuery.of(context).size.height * .4,
+      height: MediaQuery.of(context).size.height * .45,
       color: Color(0Xfff64747),
     );
   }
