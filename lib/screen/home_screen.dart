@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_bakery/widgets/custom_scaffold.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -15,21 +14,36 @@ class HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       top: true,
       bottom: true,
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            _buildHeader(context),
-            SizedBox(height: 10.0),
-            _buildBody(),
-          ],
-        ),
+      child: Stack(
+        children: <Widget>[
+          _buildBackground(),
+          _buildAppBar(),
+          Column(
+            children: <Widget>[
+              SizedBox(
+                height: MediaQuery.of(context).size.height * .1,
+              ),
+              _buildHeader(),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * .05,
+              ),
+              _buildBody(),
+            ],
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildAppBar(BuildContext context) {
+  Widget _buildBackground() {
+    return Container(
+      width: double.infinity,
+      height: MediaQuery.of(context).size.height * .4,
+      color: Color(0Xfff64747),
+    );
+  }
+
+  Widget _buildAppBar() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
       child: Row(
@@ -61,22 +75,35 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildHeader(BuildContext context) {
-    return Stack(
+  Widget _buildHeader() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Container(
-          width: double.infinity,
-          color: Color(0Xfff64747),
-          child: Padding(
-            padding: const EdgeInsets.only(top: 50.0),
-            child: Image.network(
-              'http://www.paoquentinhosaindo.com.br/site/themes/hebo/img/logoSite.png',
-              height: 200.0,
-              fit: BoxFit.fill,
+        Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            CircleAvatar(
+              backgroundColor: Colors.transparent,
+              minRadius: 50.0,
+              maxRadius: 50.0,
+              child: Image.network(
+                'http://www.paoquentinhosaindo.com.br/site/themes/hebo/img/logoSite.png',
+              ),
             ),
-          ),
+            SizedBox(
+              height: 10.0,
+            ),
+            Text(
+              'BEM VINDO!',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20.0,
+                fontWeight: FontWeight.w500,
+              ),
+            )
+          ],
         ),
-        _buildAppBar(context),
       ],
     );
   }
@@ -89,7 +116,7 @@ class HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.all(8.0),
             child: Container(
               color: Colors.red,
-              width: 80.0,
+              width: 40.0,
             ),
           ),
     );
@@ -103,7 +130,7 @@ class HomeScreenState extends State<HomeScreen> {
           height: 10.0,
         ),
         FeaturedList(
-          text: 'Padarias próximas à mim',
+          text: 'Próximas à mim',
           itemList: list,
         ),
       ],
@@ -139,27 +166,35 @@ class FeaturedList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size deviceSize = MediaQuery.of(context).size;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(left: 18.0, top: 8.0, bottom: 8.0),
-          child: Text(
-            this.text,
-            style: TextStyle(
-              fontSize: 20.0,
-              fontWeight: FontWeight.w500,
+    return SizedBox(
+      height: deviceSize.height / 4,
+      width: MediaQuery.of(context).size.width,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Card(
+          elevation: 4.0,
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text(
+                  this.text,
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                // Padding(
+                //   padding: EdgeInsets.all(8.0),
+                //   child: this.itemList,
+                // ),
+              ],
             ),
           ),
         ),
-        SizedBox(
-          height: deviceSize.height / 5,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Card(elevation: 2.0, child: this.itemList),
-          ),
-        )
-      ],
+      ),
     );
   }
 }
