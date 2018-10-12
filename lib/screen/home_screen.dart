@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_bakery/config/application.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -11,27 +12,23 @@ class HomeScreenState extends State<HomeScreen> {
   Size deviceSize;
 
   Widget _buildContent(BuildContext context) {
-    return SafeArea(
-      top: true,
-      bottom: true,
-      child: Stack(
-        children: <Widget>[
-          _buildBackground(),
-          _buildAppBar(),
-          Column(
-            children: <Widget>[
-              SizedBox(
-                height: MediaQuery.of(context).size.height * .1,
-              ),
-              _buildHeader(),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * .05,
-              ),
-              _buildBody(),
-            ],
-          ),
-        ],
-      ),
+    return Stack(
+      children: <Widget>[
+        _buildBackground(),
+        _buildAppBar(),
+        Column(
+          children: <Widget>[
+            SizedBox(
+              height: 120.0,
+            ),
+            _buildHeader(),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * .05,
+            ),
+            _buildBody(),
+          ],
+        ),
+      ],
     );
   }
 
@@ -44,33 +41,39 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildAppBar() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.menu,
-              color: Colors.white,
+    return SafeArea(
+      top: true,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.menu,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
             ),
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
-          ),
-          Text(
-            'MY BAKERY',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w400, fontSize: 26.0),
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.notifications_active,
-              color: Colors.white,
+            Text(
+              'MY BAKERY',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 26.0),
             ),
-            onPressed: () {},
-          ),
-        ],
+            IconButton(
+              icon: Icon(
+                Icons.notifications_active,
+                color: Colors.white,
+              ),
+              onPressed: () {},
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -143,7 +146,9 @@ class HomeScreenState extends State<HomeScreen> {
       drawer: Drawer(),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.red,
-        onPressed: () {},
+        onPressed: () {
+          Application.router.navigateTo(context, '/list');
+        },
         child: Icon(Icons.search),
       ),
       body: Builder(

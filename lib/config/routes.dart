@@ -4,13 +4,16 @@ import 'package:my_bakery/config/route_handlers.dart';
 
 class Routes {
   static String root = "/";
-  static String login = "/login";
+  static String profile = "/profile";
+  static String list = "/list";
 
   static void configureRoutes(Router router) {
-    router.notFoundHandler = new Handler(handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    router.notFoundHandler = new Handler(
+        handlerFunc: (BuildContext context, Map<String, List<String>> params) {
       print("route was not found!");
     });
     router.define(root, handler: rootHandler);
-    router.define(login, handler: loginHandler);
+    router.define(profile, handler: profileHandler);
+    router.define(list, handler: listHandler);
   }
 }
